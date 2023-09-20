@@ -1,18 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section class="container mx-auto mt-8">
-        <h2 class="text-2xl font-semibold text-blue-900">Blog Posts</h2>
-        <ul class="space-y-4 mt-4">
-            {% for post in posts %}
-                <li class="bg-white shadow-md p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold text-blue-900">{{ post.title }}</h3>
-                    <p class="text-gray-600">Published by <a href="{% url 'post_details' post.author.id %}">{{ post.author }} </a>on {{ post.publication_date|date:"F d, Y" }}</p>
-                    <p class="mt-2">{{ post.content }}</p>
-                </li>
-            {% empty %}
-                <p class="mt-4 text-gray-600">No blog posts available.</p>
-            {% endfor %}
-        </ul>
-    </section>
+<section class="container mx-auto mt-8">
+    <h2 class="text-3xl font-semibold text-blue-900 mb-6">Blog Posts</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {% for post in posts %}
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            {% if post.header_image %}
+            <img src="{{ post.header_image.url }}" alt="{{ post.title }} Header Image" class="w-full h-40 object-contain">
+            {% endif %}
+            <div class="p-6">
+                <h3 class="text-2xl font-semibold text-blue-900 mb-2">{{ post.title }}</h3>
+                <p class="text-gray-600">Published by <a href="{% url 'post_details' post.author.id %}" class="text-blue-500 hover:underline">{{ post.author }}</a> on {{ post.publication_date|date:"F d, Y" }}</p>
+                <p class="mt-4 text-gray-700">{{ post.content }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="mt-4 text-gray-600 col-span-3 text-center">No blog posts available.</p>
+        {% endfor %}
+    </div>
+</section>
+
+
 {% endblock %}

@@ -9,6 +9,7 @@ class Post(models.Model):
     slug = models.SlugField()
     author = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
     publication_date = models.DateTimeField(default=timezone.now)
+    header_image = models.ImageField(upload_to='post_images/', blank=True, null=True)
 
     def __str__(self):
         return self.title
